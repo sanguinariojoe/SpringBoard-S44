@@ -2,7 +2,7 @@ return {
   name='SpringBoard S44',
   description='Scenario Editor for Spring: 1944',
   shortname='SE S44',
-  version='git',
+  version='$VERSION',
   mutator='Official',
   game='SpringBoard S44',
   shortGame='SE S44',
