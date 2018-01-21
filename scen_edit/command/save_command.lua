@@ -1,6 +1,3 @@
--- Override the default save command to avoid flags and buoys get saved in
--- model.lua
-
 SaveCommand = Command:extends{}
 SaveCommand.className = "SaveCommand"
 
@@ -143,7 +140,10 @@ function SaveCommand.GenerateScript(dev)
 
                 table.insert(ais, {
                     Name = team.name,
-                    Team = team.id - 1,
+                    -- Teams are referenced by the index, which may match with
+                    -- team.id, or may not, depending on the order they are
+                    -- parsed.
+                    Team = #teams - 1,
                     ShortName = aiShortName,
                     Version = aiVersion,
 
@@ -157,7 +157,10 @@ function SaveCommand.GenerateScript(dev)
                 end
                 table.insert(players, {
                     Name = team.name,
-                    Team = team.id - 1,
+                    -- Teams are referenced by the index, which may match with
+                    -- team.id, or may not, depending on the order they are
+                    -- parsed.
+                    Team = #teams - 1,
                     Spectator = spectator,
 
                     IsFromDemo = true,
