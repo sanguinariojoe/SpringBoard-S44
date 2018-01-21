@@ -9,6 +9,7 @@ return {
   modtype=1,
   depend = {  			
   	'Spring: 1944 $VERSION',
+  	'S44-Poland 1.0',
   	'SpringBoard Core $VERSION',
   },
 }
