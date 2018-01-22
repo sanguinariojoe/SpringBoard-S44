@@ -124,13 +124,15 @@ function SaveCommand.GenerateScript(dev)
     local players = {}
     for _, team in pairs(SB.model.teamManager:getAllTeams()) do
         if not team.gaia then
-            table.insert(teams, {
+            -- We wanna preserve the team ids, so better using teams as a
+            -- map/dictionary, where the keys are the teams ids
+            teams[team.id] = {
                 -- TeamID = team.id, ID is implicit as index-1
                 TeamLeader = 0,
                 AllyTeam = team.allyTeam,
                 RGBColor = team.color.r .. " " .. team.color.g .. " " .. team.color.b,
                 Side = team.side,
-            })
+            }
             if team.ai then
                 local aiShortName = "NullAI"
                 local aiVersion = ""
@@ -140,10 +142,7 @@ function SaveCommand.GenerateScript(dev)
 
                 table.insert(ais, {
                     Name = team.name,
-                    -- Teams are referenced by the index, which may match with
-                    -- team.id, or may not, depending on the order they are
-                    -- parsed.
-                    Team = #teams - 1,
+                    Team = team.id,
                     ShortName = aiShortName,
                     Version = aiVersion,
 
@@ -157,10 +156,7 @@ function SaveCommand.GenerateScript(dev)
                 end
                 table.insert(players, {
                     Name = team.name,
-                    -- Teams are referenced by the index, which may match with
-                    -- team.id, or may not, depending on the order they are
-                    -- parsed.
-                    Team = #teams - 1,
+                    Team = team.id,
                     Spectator = spectator,
 
                     IsFromDemo = true,
