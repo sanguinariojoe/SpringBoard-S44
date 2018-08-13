@@ -1,4 +1,10 @@
-local UIWidgets = {"Chili Pro Console2", "LockCamera"}
+local oldUIWidgets = {
+    "1944 Tooltip Replacement", -- in both lists, reset
+    "1944 Resource Bars",
+    "Chili Pro Console2",
+    "Simple player list",
+}
+
 
 return {
     startStop = {
@@ -7,13 +13,19 @@ return {
     },
 
     OnStopEditingUnsynced = function()
-        for _, widgetName in ipairs(UIWidgets) do
+        -- Re-enable the widgets
+        for _, widgetName in ipairs(oldUIWidgets) do
             widgetHandler:EnableWidget(widgetName)
         end
+        -- And move back to the new UI
+        widgetHandler:DisableWidget("1944 Enable/Disable Old UI")
     end,
 
     OnStartEditingUnsynced = function()
-        for _, widgetName in ipairs(UIWidgets) do
+        -- Disable the whole new UI, falling back to the traditional UI
+        widgetHandler:EnableWidget("1944 Enable/Disable Old UI")
+        -- And disable its widgets
+        for _, widgetName in ipairs(oldUIWidgets) do
             widgetHandler:DisableWidget(widgetName)
         end
         Spring.SendCommands("tooltip 0")
